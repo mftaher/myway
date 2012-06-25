@@ -1,0 +1,20 @@
+require File.expand_path('../app/<%= name %>/version', __FILE__)
+
+Gem::Specification.new do |gem|
+  gem.authors       = [""]
+  gem.email         = [""]
+  gem.description   = %q{Todo: Write application description}
+  gem.summary       = %q{Todo: Write application summary}
+  gem.homepage      = ""
+
+  gem.files         = `git ls-files`.split($\)
+  gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
+  gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
+  gem.name          = "<%= name %>"
+  gem.require_paths = ["app"]
+  gem.version       = <%= name.camelize %>::VERSION
+  gem.add_runtime_dependency "sinatra", ">= 1.3.2"
+  gem.add_runtime_dependency "capistrano"
+  gem.add_runtime_dependency "unicorn"
+  gem.add_runtime_dependency "sprockets"
+end

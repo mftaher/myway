@@ -1,0 +1,32 @@
+class <%= name.camelize %> < Sinatra::Base
+
+  set :app_path, '/'
+
+  set :logging, true
+  set :method_override, true
+  set :assets, Sprockets::Environment.new
+
+  # Configure sprockets
+  settings.assets.append_path "assets/js"
+  settings.assets.append_path "assets/css"
+
+  # For compressed JS and CSS output
+  require "yui/compressor"
+  settings.assets.js_compressor  = YUI::JavaScriptCompressor.new
+  settings.assets.css_compressor = YUI::CssCompressor.new
+
+  get "/" do
+    haml :index
+  end
+
+  get "/js/:file.js" do
+    content_type "application/javascript"
+    settings.assets["#{params[:file]}.js"]
+  end
+
+  get "/css/:file.css" do
+    content_type "text/css"
+    settings.assets["#{params[:file]}.css"]
+  end
+
+end
