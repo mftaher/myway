@@ -25,8 +25,10 @@ module Myway
       @name = name
       if @name.nil?
         puts "You must provide a name for your project"
-        name = @name = ask "Project Name: "
+        exit 0
       end
+
+      user_info
 
       empty_directory "#{name}/app/routes"
       empty_directory "#{name}/app/views"
@@ -46,6 +48,12 @@ module Myway
       template "myway/templates/readme.tt", "#{name}/README.md"
       template "myway/templates/gitignore.tt", "#{name}/.gitignore"
 
+      Dir.chdir(File.join(Dir.pwd, name))
+
+      init_git
+      init_bundle
+      init_capistrano
+
     end
 
     no_tasks do
@@ -53,20 +61,64 @@ module Myway
         File.exists?('./app') && File.directory?('./app')
       end
 
-      def git_init
-        puts "Initializating git repo in #{name}"
-        Dir.chdir(File.join(Dir.pwd, name)) { `git init`; `git add .` }
+      def user_info
+        @user = IO.popen("git config --global user.name").read.gsub("\n", "")
+        @email = IO.popen("git config --global user.email").read.gsub("\n", "")
       end
 
-      def bundle_init
-        puts "Installing gems for #{name}"
-        Dir.chdir(File.join(Dir.pwd, name)) { `bundle install` }
+      def method_missing(meth, *args, &block)
+        return init($1.to_sym) if meth.to_s =~ /^init_(.*)/
+        super
       end
 
-      def cap_init
-        puts "Generating capistrano config for #{name}"
-        Dir.chdir(File.join(Dir.pwd, name)) { `capify` }
+      def append_cap
+        #inject_into_file "#{name}/config/deploy.rb", :after => "# these http://github.com/rails/irs_process_scripts\n" do
+        append_file "#{name}/config/deploy.rb" do
+'
+#set :sin_env, :production
+
+# Where will it be located on a server?
+#set :deploy_to, "/var/www/#{application}"
+#set :unicorn_conf, "#{deploy_to}/config/unicorn.rb"
+#set :unicorn_pid, "#{deploy_to}/pids/unicorn.pid"
+
+
+# Unicorn control tasks
+#namespace :deploy do
+#  task :restart do
+#    run "if [ -f #{unicorn_pid} ]; then kill -USR2 `cat #{unicorn_pid}`; else cd #{deploy_to} && bundle exec unicorn -c #{unicorn_conf} -E #{sin_env} -D; fi"
+#  end
+#  task :start do
+#    run "cd #{deploy_to} && bundle exec unicorn -c #{unicorn_conf} -E #{sin_env} -D"
+#  end
+#  task :stop do
+#    run "if [ -f #{unicorn_pid} ]; then kill -QUIT `cat #{unicorn_pid}`; fi"
+#  end
+#
+#end
+'
+        end
+      end
+
+      def init(op)
+        case op
+          when :git
+            say "Initialing git repo in #{name}"
+            `git init`
+            `git add .`
+          when :bundle
+            say "Installing gems for #{name}"
+            `bundle install`
+          when :capistrano
+            say "Generating capistrano config for #{name}"
+            `capify .`
+            append_cap
+        end
       end
     end
   end
 end
+
+
+
+
