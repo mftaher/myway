@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["ftaher@gmail.com"]
   gem.description   = %q{Sinatra project generator for sinatra based web applications. Named after
                         Frank Sinatra's popular song during 1969 'My way'}
-  gem.summary       = %q{Scaffolding application for Sinatra web projects}
+  gem.summary       = %q{Scaffolding application for Sinatra web applications}
   gem.homepage      = "http://github.com/mftaher/myway"
 
   gem.files         = `git ls-files`.split($\)

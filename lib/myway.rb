@@ -71,35 +71,6 @@ module Myway
         super
       end
 
-      def append_cap
-        #inject_into_file "#{name}/config/deploy.rb", :after => "# these http://github.com/rails/irs_process_scripts\n" do
-        append_file "#{name}/config/deploy.rb" do
-'
-#set :sin_env, :production
-
-# Where will it be located on a server?
-#set :deploy_to, "/var/www/#{application}"
-#set :unicorn_conf, "#{deploy_to}/config/unicorn.rb"
-#set :unicorn_pid, "#{deploy_to}/pids/unicorn.pid"
-
-
-# Unicorn control tasks
-#namespace :deploy do
-#  task :restart do
-#    run "if [ -f #{unicorn_pid} ]; then kill -USR2 `cat #{unicorn_pid}`; else cd #{deploy_to} && bundle exec unicorn -c #{unicorn_conf} -E #{sin_env} -D; fi"
-#  end
-#  task :start do
-#    run "cd #{deploy_to} && bundle exec unicorn -c #{unicorn_conf} -E #{sin_env} -D"
-#  end
-#  task :stop do
-#    run "if [ -f #{unicorn_pid} ]; then kill -QUIT `cat #{unicorn_pid}`; fi"
-#  end
-#
-#end
-'
-        end
-      end
-
       def init(op)
         case op
           when :git
@@ -110,9 +81,8 @@ module Myway
             say "Installing gems for #{name}"
             `bundle install`
           when :capistrano
-            say "Generating capistrano config for #{name}"
-            `capify .`
-            append_cap
+            say "If you use capistrano for deployment edit this file"
+            template "myway/templates/config/deploy.rb.tt", "#{name}/config/deploy.rb"
         end
       end
     end

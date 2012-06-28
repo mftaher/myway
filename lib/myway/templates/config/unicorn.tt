@@ -23,6 +23,7 @@ before_exec do |server|
   ENV['BUNDLE_GEMFILE'] = File.expand_path('../Gemfile', File.dirname(__FILE__))
 end
 
+=begin
 before_fork do |server, worker|
   defined?(ActiveRecord::Base) and
       ActiveRecord::Base.connection.disconnect!
@@ -44,3 +45,4 @@ after_fork do |server, worker|
   defined?(ActiveRecord::Base) and
       ActiveRecord::Base.establish_connection
 end
+=end
