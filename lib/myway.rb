@@ -74,11 +74,11 @@ module Myway
       def init(op)
         case op
           when :git
-            say "Initialing git repo in #{name}"
+            say "Initialing git repo in #{name} ..."
             `git init`
             `git add .`
           when :bundle
-            say "Installing gems for #{name}"
+            say "Installing gems for #{name} ..."
             `bundle install`
           when :capistrano
             say "If you use capistrano for deployment edit this file"
