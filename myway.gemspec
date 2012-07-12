@@ -16,4 +16,5 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Myway::VERSION
   gem.add_runtime_dependency "thor", ">= 0.15.2"
+  gem.add_runtime_dependency "zip", "~> 2.0.2"
 end

@@ -1,6 +1,15 @@
 require "myway/version"
+require "open-uri"
+require "zip/zipfilesystem"
+require "fileutils"
 require "thor"
 
+JS_LIBS = {
+    'jquery' => 'http://code.jquery.com/jquery-1.7.2.min.js',
+    'backbone' => 'http://documentcloud.github.com/backbone/backbone-min.js',
+    'underscore' => 'http://documentcloud.github.com/underscore/underscore-min.js',
+    'bootstrap' => 'https://twitter.github.com/bootstrap/assets/bootstrap.zip'
+}
 class String
   def camelize(first_letter_in_uppercase = true)
     if first_letter_in_uppercase
@@ -50,6 +59,8 @@ module Myway
 
       Dir.chdir(File.join(Dir.pwd, name))
 
+      build_js_libs
+
       init_git
       init_bundle
       init_capistrano
@@ -64,6 +75,37 @@ module Myway
       def user_info
         @user = IO.popen("git config --global user.name").read.gsub("\n", "")
         @email = IO.popen("git config --global user.email").read.gsub("\n", "")
+      end
+
+      def unzip_file (file, destination)
+        Zip::ZipFile.open(file) { |zip_file|
+          zip_file.each { |f|
+            f_path=File.join(destination, f.name)
+            FileUtils.mkdir_p(File.dirname(f_path))
+            zip_file.extract(f, f_path) unless File.exist?(f_path)
+          }
+        }
+      end
+
+      def build_js_libs(libs=%w(jquery underscore backbone boostrap))
+        libs.each do |lib|
+          if lib != "bootstrap"
+            File.open "./assets/js/#{lib}.js", 'w+' do |file|
+              file.write get_latest(lib)
+              say " - ./assets/js/#{lib}.js"
+            end
+          else
+            File.open "assets/js/#{lib}.zip", 'wb' do |file|
+              file.write get_latest(lib)
+              say " - ./assets/js/#{lib}.zip"
+            end
+            unzip_file "./assets/js/#{lib}.zip", "./assets/js/"
+          end
+        end
+      end
+
+      def get_latest(scriptname)
+        open(JS_LIBS[scriptname]).read
       end
 
       def method_missing(meth, *args, &block)
