@@ -87,7 +87,7 @@ module Myway
         }
       end
 
-      def build_js_libs(libs=%w(jquery underscore backbone boostrap))
+      def build_js_libs(libs=%w(jquery underscore backbone bootstrap))
         libs.each do |lib|
           if lib != "bootstrap"
             File.open "./assets/js/#{lib}.js", 'w+' do |file|
@@ -105,6 +105,7 @@ module Myway
       end
 
       def get_latest(scriptname)
+        p JS_LIBS[scriptname]
         open(JS_LIBS[scriptname]).read
       end
 
