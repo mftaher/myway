@@ -42,6 +42,7 @@ module Myway
 
       empty_directory "#{name}/app/routes"
       empty_directory "#{name}/app/models"
+      empty_directory "#{name}/assets/js"
       empty_directory "#{name}/spec"
 
       template "myway/templates/app/version.tt", "#{name}/app/version.rb"
