@@ -102,10 +102,10 @@ module Myway
             end
             unzip_file "./assets/js/#{lib}.zip", "./assets/"
             File.delete "./assets/js/#{lib}.zip"
-            `mv ./assets/bootstrap/js/ ./assets/`
+            `mv ./assets/bootstrap/js/* ./assets/js/`
             `mv ./assets/bootstrap/css/ ./assets/`
             `mv ./assets/bootstrap/img/ ./assets/`
-            Dir.delete "./assets/boostrap/"
+            Dir.delete "./assets/bootstrap/"
           end
         end
       end
