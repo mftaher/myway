@@ -100,11 +100,12 @@ module Myway
               file.write get_latest(lib)
               say " - ./assets/js/#{lib}.zip"
             end
-            unzip_file "./assets/js/#{lib}.zip", "./assets/bootstrap/"
+            unzip_file "./assets/js/#{lib}.zip", "./assets/"
             File.delete "./assets/js/#{lib}.zip"
             `mv ./assets/bootstrap/js/ ./assets/`
             `mv ./assets/bootstrap/css/ ./assets/`
             `mv ./assets/bootstrap/img/ ./assets/`
+            Dir.delete "./assets/boostrap/"
           end
         end
       end
