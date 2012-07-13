@@ -48,7 +48,7 @@ module Myway
       template "myway/templates/app/version.tt", "#{name}/app/version.rb"
       template "myway/templates/app/app.tt", "#{name}/app/#{name}.rb"
       template "myway/templates/app/views/layout.haml.tt", "#{name}/app/views/layout.haml"
-      template "myway/templates/app/views/layout.haml.tt", "#{name}/app/views/index.haml"
+      template "myway/templates/app/views/index.haml.tt", "#{name}/app/views/index.haml"
       template "myway/templates/app/views/includes/navbar.haml.tt", "#{name}/app/views/includes/navbar.haml"
       template "myway/templates/config/unicorn.tt", "#{name}/config/unicorn.rb"
       template "myway/templates/config.ru.tt", "#{name}/config.ru"
@@ -88,17 +88,16 @@ module Myway
         }
       end
 
-      def build_js_libs(libs=%w(head jquery underscore backbone bootstrap))
+      def build_js_libs(libs=%w(head underscore backbone bootstrap))
         libs.each do |lib|
           if lib != "bootstrap"
-            File.open "./assets/js/#{lib}.js", 'w+' do |file|
+            File.open "./assets/js/#{lib}.min.js", 'w+' do |file|
               file.write get_latest(lib)
-              say " - ./assets/js/#{lib}.js"
+              say " - ./assets/js/#{lib}.min.js"
             end
           else
             File.open "assets/js/#{lib}.zip", 'wb' do |file|
               file.write get_latest(lib)
-              say " - ./assets/js/#{lib}.zip"
             end
             unzip_file "./assets/js/#{lib}.zip", "./assets/"
             File.delete "./assets/js/#{lib}.zip"
