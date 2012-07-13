@@ -88,17 +88,16 @@ module Myway
         }
       end
 
-      def build_js_libs(libs=%w(head jquery underscore backbone bootstrap))
+      def build_js_libs(libs=%w(head underscore backbone bootstrap))
         libs.each do |lib|
           if lib != "bootstrap"
-            File.open "./assets/js/#{lib}.js", 'w+' do |file|
+            File.open "./assets/js/#{lib}.min.js", 'w+' do |file|
               file.write get_latest(lib)
-              say " - ./assets/js/#{lib}.js"
+              say " - ./assets/js/#{lib}.min.js"
             end
           else
             File.open "assets/js/#{lib}.zip", 'wb' do |file|
               file.write get_latest(lib)
-              say " - ./assets/js/#{lib}.zip"
             end
             unzip_file "./assets/js/#{lib}.zip", "./assets/"
             File.delete "./assets/js/#{lib}.zip"
