@@ -48,7 +48,7 @@ module Myway
       template "myway/templates/app/version.tt", "#{name}/app/version.rb"
       template "myway/templates/app/app.tt", "#{name}/app/#{name}.rb"
       template "myway/templates/app/views/layout.haml.tt", "#{name}/app/views/layout.haml"
-      template "myway/templates/app/views/layout.haml.tt", "#{name}/app/views/index.haml"
+      template "myway/templates/app/views/index.haml.tt", "#{name}/app/views/index.haml"
       template "myway/templates/app/views/includes/navbar.haml.tt", "#{name}/app/views/includes/navbar.haml"
       template "myway/templates/config/unicorn.tt", "#{name}/config/unicorn.rb"
       template "myway/templates/config.ru.tt", "#{name}/config.ru"
