@@ -5,10 +5,11 @@ require "fileutils"
 require "thor"
 
 JS_LIBS = {
+    'head' => 'https://github.com/headjs/headjs/raw/v0.96/dist/head.load.min.js',
     'jquery' => 'http://code.jquery.com/jquery-1.7.2.min.js',
     'backbone' => 'http://documentcloud.github.com/backbone/backbone-min.js',
     'underscore' => 'http://documentcloud.github.com/underscore/underscore-min.js',
-    'bootstrap' => 'https://twitter.github.com/bootstrap/assets/bootstrap.zip'
+    'bootstrap' => 'http://twitter.github.com/bootstrap/assets/bootstrap.zip'
 }
 class String
   def camelize(first_letter_in_uppercase = true)
@@ -40,15 +41,14 @@ module Myway
       user_info
 
       empty_directory "#{name}/app/routes"
-      empty_directory "#{name}/app/views"
       empty_directory "#{name}/app/models"
-      empty_directory "#{name}/config"
-      empty_directory "#{name}/assets/js"
-      empty_directory "#{name}/assets/css"
       empty_directory "#{name}/spec"
 
       template "myway/templates/app/version.tt", "#{name}/app/version.rb"
       template "myway/templates/app/app.tt", "#{name}/app/#{name}.rb"
+      template "myway/templates/app/views/layout.haml.tt", "#{name}/app/views/layout.haml"
+      template "myway/templates/app/views/layout.haml.tt", "#{name}/app/views/index.haml"
+      template "myway/templates/app/views/includes/navbar.haml.tt", "#{name}/app/views/includes/navbar.haml"
       template "myway/templates/config/unicorn.tt", "#{name}/config/unicorn.rb"
       template "myway/templates/config.ru.tt", "#{name}/config.ru"
       template "myway/templates/gemspec.tt", "#{name}/#{name}.gemspec"
@@ -87,7 +87,7 @@ module Myway
         }
       end
 
-      def build_js_libs(libs=%w(jquery underscore backbone bootstrap))
+      def build_js_libs(libs=%w(head jquery underscore backbone bootstrap))
         libs.each do |lib|
           if lib != "bootstrap"
             File.open "./assets/js/#{lib}.js", 'w+' do |file|
@@ -99,13 +99,16 @@ module Myway
               file.write get_latest(lib)
               say " - ./assets/js/#{lib}.zip"
             end
-            unzip_file "./assets/js/#{lib}.zip", "./assets/js/"
+            unzip_file "./assets/js/#{lib}.zip", "./assets/bootstrap/"
+            File.delete "./assets/js/#{lib}.zip"
+            `mv ./assets/bootstrap/js/ ./assets/js/`
+            `mv ./assets/bootstrap/css/ ./assets/css/`
+            `mv ./assets/bootstrap/img/ ./assets/img/`
           end
         end
       end
 
       def get_latest(scriptname)
-        p JS_LIBS[scriptname]
         open(JS_LIBS[scriptname]).read
       end
 
@@ -124,7 +127,7 @@ module Myway
             say "Installing gems for #{name} ..."
             `bundle install`
           when :capistrano
-            say "If you use capistrano for deployment edit this file"
+            say "Initializing capistrano deploy script"
             template "myway/templates/config/deploy.rb.tt", "#{name}/config/deploy.rb"
         end
       end
