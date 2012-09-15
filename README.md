@@ -26,6 +26,12 @@ And to start a new sinatra project:
     $ mw new "YourProjectName"
 
 
+CHANGE LOG
+
+Version 0.1.3
+    - adds head, backbone, underscore js in assets pipeline
+    - scaffolds capistrano deploy script
+
 ## Contributing
 
 1. Fork it
