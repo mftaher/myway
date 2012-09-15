@@ -6,10 +6,16 @@ default the sinatra app uses haml as it's templating engine.
 
 ## Installation and Usage
 
-Install it yourself as:
+Install it yourself from source:
 
     $ rake install
 
+
+Or,
+
+Install from rubygems
+
+    $ gem install myway
 
 And then execute:
 
@@ -17,7 +23,7 @@ And then execute:
 
 And to start a new sinatra project:
 
-    $ mw new "ProjectName"
+    $ mw new "YourProjectName"
 
 
 ## Contributing
