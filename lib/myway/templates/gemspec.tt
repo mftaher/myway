@@ -13,14 +13,12 @@ Gem::Specification.new do |gem|
   gem.name          = "<%= name %>"
   gem.require_paths = ["app"]
   gem.version       = <%= name.camelize %>::VERSION
-  gem.add_runtime_dependency "sinatra", "~> 1.3.2"
-  gem.add_runtime_dependency "sinatra-contrib", "~> 1.3.1"
+  gem.add_runtime_dependency "sinatra"
   gem.add_runtime_dependency "unicorn"
   gem.add_runtime_dependency "sprockets"
   gem.add_runtime_dependency "yui-compressor"
   gem.add_runtime_dependency "haml"
 
-  gem.add_development_dependency "capybara"
   gem.add_development_dependency "rspec"
-  gem.add_development_dependency "capistrano", "~> 2.12.0"
+  gem.add_development_dependency "capistrano"
 end

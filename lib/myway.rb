@@ -105,6 +105,7 @@ module Myway
             `mv ./assets/bootstrap/css/ ./assets/`
             `mv ./assets/bootstrap/img/ ./assets/`
             FileUtils.rm_rf "./assets/bootstrap/"
+            say " - ./assets/js/#{lib}.min.js"
           end
         end
       end
