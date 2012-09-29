@@ -26,7 +26,7 @@
       =yield
     %script
       head.js(
-      /js/underscore.min.js", "/js/backbone.min.js",
+      "/js/underscore.min.js", "/js/backbone.min.js",
       "/js/bootstrap-alert.js", "/js/bootstrap-dropdown.js",
       "/js/bootstrap-modal.js","/js/bootstrap-tooltip.js"
       //"/js/bootstrap-button.js","/js/bootstrap-collapse.js","/js/bootstrap-carousel.js",

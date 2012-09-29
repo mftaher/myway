@@ -1,4 +1,23 @@
 source 'https://rubygems.org'
 
 # Specify your gem's dependencies in <%= name %>.gemspec
-gemspec
+# gemspec
+
+gem "sinatra"
+gem "unicorn"
+gem "sprockets"
+gem "yui-compressor"
+gem "haml"
+
+group :test do
+  gem "rspec"
+  gem "jasmine"
+  # gem "jasmine-phantom"
+  gem "factory-girl"
+  #gem "capybara"
+  #gem "poltergeist"
+end
+
+group :development do
+  gem "capistrano"
+end

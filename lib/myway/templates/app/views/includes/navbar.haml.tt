@@ -5,7 +5,7 @@
         %span.icon-bar
         %span.icon-bar
         %span.icon-bar
-      %a.brand{:href => "#"} Project
+      %a.brand{:href => "#"} Project <%= name %>
       .nav-collapse
         %ul.nav
           %li.active

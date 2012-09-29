@@ -6,10 +6,12 @@ require "thor"
 
 JS_LIBS = {
     'head' => 'https://github.com/headjs/headjs/raw/v0.96/dist/head.load.min.js',
-    'jquery' => 'http://code.jquery.com/jquery-1.7.2.min.js',
+    'jquery' => 'http://code.jquery.com/jquery-1.8.2.min.js',
     'backbone' => 'http://documentcloud.github.com/backbone/backbone-min.js',
     'underscore' => 'http://documentcloud.github.com/underscore/underscore-min.js',
-    'bootstrap' => 'http://twitter.github.com/bootstrap/assets/bootstrap.zip'
+    'bootstrap' => 'http://twitter.github.com/bootstrap/assets/bootstrap.zip',
+    'kickstart' => 'http://www.99lime.com/downloads/',
+    'yepnope' => 'https://github.com/SlexAxton/yepnope.js/zipball/master'
 }
 class String
   def camelize(first_letter_in_uppercase = true)
@@ -57,6 +59,9 @@ module Myway
       template "myway/templates/rakefile.tt", "#{name}/Rakefile"
       template "myway/templates/readme.tt", "#{name}/README.md"
       template "myway/templates/gitignore.tt", "#{name}/.gitignore"
+      template "myway/templates/gitkeep.tt", "#{name}/app/models/.gittkeep"
+      template "myway/templates/spec/spec_helper.rb.tt", "#{name}/spec/spec_helper.rb"
+      template "myway/templates/spec/acceptance_helper.rb.tt", "#{name}/spec/acceptance_helper.rb"
 
       Dir.chdir(File.join(Dir.pwd, name))
 
@@ -64,6 +69,7 @@ module Myway
 
       init_git
       init_bundle
+      init_jasmine
       init_capistrano
 
     end
@@ -131,6 +137,14 @@ module Myway
           when :capistrano
             say "Initializing capistrano deploy script"
             template "myway/templates/config/deploy.rb.tt", "#{name}/config/deploy.rb"
+          when :jasmine
+            say "Initialize Jasmine specs settings in #{name} ..."
+            `jasmine init`
+            FileUtils.rm_rf "./public/javascripts"
+            FileUtils.rm_rf "./spec/javascripts/helpers/*.js"
+            FileUtils.rm_rf "./spec/javascripts/*.js"
+            template "myway/templates/spec/specHelper.js.tt", "#{name}/spec/javascripts/helpers/specHelper.js"
+            template "myway/templates/spec/fixture.js.tt", "#{name}/spec/javascripts/fixtures/fixtures.js"
         end
       end
     end
