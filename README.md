@@ -28,9 +28,13 @@ And to start a new sinatra project:
 
 CHANGE LOG
 
-Version 0.1.3
+VERSION 0.1.3
     - adds head, backbone, underscore js in assets pipeline
     - scaffolds capistrano deploy script
+
+VERSION 0.1.5
+    - optional capybara and jasmine test setup
+
 
 ## Contributing
 
