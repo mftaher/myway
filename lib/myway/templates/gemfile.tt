@@ -13,7 +13,7 @@ group :test do
   gem "rspec"
   gem "jasmine"
   # gem "jasmine-phantom"
-  gem "factory-girl"
+  gem "factory_girl"
   #gem "capybara"
   #gem "poltergeist"
 end
