@@ -142,16 +142,16 @@ module Myway
             `bundle install`
           when :capistrano
             say "Initializing capistrano deploy script"
-            template "myway/templates/config/deploy.rb.tt", "./config/deploy.rb"
+            template "myway/templates/config/deploy.rb.tt", "#{name}/config/deploy.rb"
           when :jasmine
             say "Initialize Jasmine specs settings in #{name} ..."
             `jasmine init`
 
-            template "myway/templates/spec/specHelper.js.tt", "./spec/javascripts/helpers/specHelper.js"
-            template "myway/templates/spec/fixtures.js.tt", "./spec/javascripts/fixtures/fixtures.js"
+            template "myway/templates/spec/specHelper.js.tt", "#{name}/spec/javascripts/helpers/specHelper.js"
+            template "myway/templates/spec/fixtures.js.tt", "#{name}/spec/javascripts/fixtures/fixtures.js"
 
-            remove_file "./spec/javascripts/*.js"
-            remove_dir "./public/javascripts"
+            remove_file "#{name}/spec/javascripts/*.js"
+            remove_dir "#{name}/public/javascripts"
         end
       end
     end
