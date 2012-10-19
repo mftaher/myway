@@ -146,10 +146,12 @@ module Myway
           when :jasmine
             say "Initialize Jasmine specs settings in #{name} ..."
             `jasmine init`
-            FileUtils.rm_rf "#{name}/spec/javascripts"
-            FileUtils.rm_rf "#{name}/spec/javascripts"
-            template "myway/templates/spec/specHelper.js.tt", "#{name}/spec/javascripts/helpers/specHelper.js"
-            template "myway/templates/spec/fixtures.js.tt", "#{name}/spec/javascripts/fixtures/fixtures.js"
+
+            template "myway/templates/spec/specHelper.js.tt", "./spec/javascripts/helpers/specHelper.js"
+            template "myway/templates/spec/fixtures.js.tt", "./spec/javascripts/fixtures/fixtures.js"
+
+            remove_file "./spec/javascripts/*.js"
+            remove_dir "./public/javascripts"
         end
       end
     end
