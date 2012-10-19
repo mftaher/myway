@@ -115,7 +115,7 @@ module Myway
               `mv ./assets/bootstrap/img/ ./assets/`
               FileUtils.rm_rf "./assets/bootstrap/"
             end
-          rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError, Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError => e
+          rescue Errno::ETIMEDOUT, Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError, Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError => e
             say "#{e} Error while getting #{lib}"
             say "Add the library manually"
           end
@@ -142,7 +142,7 @@ module Myway
             `bundle install`
           when :capistrano
             say "Initializing capistrano deploy script"
-            template "myway/templates/config/deploy.rb.tt", "#{name}/config/deploy.rb"
+            template "myway/templates/config/deploy.rb.tt", "./config/deploy.rb"
           when :jasmine
             say "Initialize Jasmine specs settings in #{name} ..."
             `jasmine init`
