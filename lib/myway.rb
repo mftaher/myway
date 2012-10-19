@@ -97,23 +97,27 @@ module Myway
       end
 
       def build_js_libs(libs=%w(head underscore backbone bootstrap))
+
         libs.each do |lib|
-          if lib != "bootstrap"
-            File.open "./assets/js/#{lib}.min.js", 'w+' do |file|
-              file.write get_latest(lib)
-              say " - ./assets/js/#{lib}.min.js"
+          begin
+            if lib != "bootstrap"
+              File.open "./assets/js/#{lib}.min.js", 'w+' do |file|
+                file.write get_latest(lib)
+              end
+            else
+              File.open "assets/js/#{lib}.zip", 'wb' do |file|
+                file.write get_latest(lib)
+              end
+              unzip_file "./assets/js/#{lib}.zip", "./assets/"
+              File.delete "./assets/js/#{lib}.zip"
+              `mv ./assets/bootstrap/js/* ./assets/js/`
+              `mv ./assets/bootstrap/css/ ./assets/`
+              `mv ./assets/bootstrap/img/ ./assets/`
+              FileUtils.rm_rf "./assets/bootstrap/"
             end
-          else
-            File.open "assets/js/#{lib}.zip", 'wb' do |file|
-              file.write get_latest(lib)
-            end
-            unzip_file "./assets/js/#{lib}.zip", "./assets/"
-            File.delete "./assets/js/#{lib}.zip"
-            `mv ./assets/bootstrap/js/* ./assets/js/`
-            `mv ./assets/bootstrap/css/ ./assets/`
-            `mv ./assets/bootstrap/img/ ./assets/`
-            FileUtils.rm_rf "./assets/bootstrap/"
-            say " - ./assets/js/#{lib}.min.js"
+          rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError, Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError => e
+            say "#{e} Error while getting #{lib}"
+            say "Add the library manually"
           end
         end
       end
