@@ -116,8 +116,8 @@ module Myway
               FileUtils.rm_rf "./assets/bootstrap/"
             end
           rescue Errno::ETIMEDOUT, Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError, Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError => e
-            say "#{e} Error while getting #{lib}"
-            say "Add the library manually"
+            say "#{e} Error while getting #{lib}.js"
+            say "Add the library manually in assets/js"
           end
         end
       end
@@ -150,7 +150,7 @@ module Myway
             template "myway/templates/spec/specHelper.js.tt", "#{name}/spec/javascripts/helpers/specHelper.js"
             template "myway/templates/spec/fixtures.js.tt", "#{name}/spec/javascripts/fixtures/fixtures.js"
 
-            remove_file "#{name}/spec/javascripts/*.js"
+            remove_file "#{name}/spec/javascripts/PlayerSpec.js"
             remove_dir "#{name}/public/javascripts"
         end
       end
