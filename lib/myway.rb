@@ -43,7 +43,9 @@ module Myway
       user_info
 
       empty_directory "#{name}/app/routes"
+      create_file "#{name}/app/routes/.gitkeep", ""
       empty_directory "#{name}/app/models"
+      create_file "#{name}/app/models/.gitkeep", ""
       empty_directory "#{name}/assets/js"
       empty_directory "#{name}/spec"
 
@@ -59,7 +61,7 @@ module Myway
       template "myway/templates/rakefile.tt", "#{name}/Rakefile"
       template "myway/templates/readme.tt", "#{name}/README.md"
       template "myway/templates/gitignore.tt", "#{name}/.gitignore"
-      template "myway/templates/gitkeep.tt", "#{name}/app/models/.gittkeep"
+
       template "myway/templates/spec/spec_helper.rb.tt", "#{name}/spec/spec_helper.rb"
       template "myway/templates/spec/acceptance_helper.rb.tt", "#{name}/spec/acceptance_helper.rb"
 
