@@ -1,4 +1,4 @@
-require "sinatra/reloader"
+#require "sinatra/reloader"
 require "yaml"
 require "sprockets"
 require "haml"
@@ -8,7 +8,7 @@ class <%= name.camelize %> < Sinatra::Base
   set :app_path, '/'
 
   configure :development do
-    register Sinatra::Reloader
+    #register Sinatra::Reloader
   end
 
   set :logging, true
