@@ -125,9 +125,6 @@ module Myway
                 file.write get_latest(lib)
               end
             end
-
-
-
           rescue Errno::ETIMEDOUT, Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError, Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError => e
             say "#{e} Error while getting #{lib}.js"
             say "Add the library manually in assets/js"

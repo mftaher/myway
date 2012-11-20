@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-    %title Project: <%= name %>
+    %title Project: <%= name.camelize %>
     %meta{:name=>'viewport', :content=>'width=device-width, initial-scale=1.0'}
     %meta{:name=>'description', :content=>''}
     %meta{:name=>'author', :content=>''}
@@ -26,12 +26,12 @@
       =yield
     %script
       yepnope({
-        load:[
-        "/js/underscore.min.js", "/js/backbone.min.js",
-        "/js/bootstrap-alert.js", "/js/bootstrap-dropdown.js",
-        "/js/bootstrap-modal.js","/js/bootstrap-tooltip.js"
-        //"/js/bootstrap-button.js","/js/bootstrap-collapse.js","/js/bootstrap-carousel.js",
-        //"/js/bootstrap-popover.js","/js/bootstrap-scrollspy.js","/js/bootstrap-tab.js",
-        //"/js/bootstrap-transition.js","/js/bootstrap-typeahead.js"]
+      load:[
+      "/js/underscore.min.js", "/js/backbone.min.js",
+      "/js/bootstrap-alert.js", "/js/bootstrap-dropdown.js",
+      "/js/bootstrap-modal.js","/js/bootstrap-tooltip.js"
+      //"/js/bootstrap-button.js","/js/bootstrap-collapse.js","/js/bootstrap-carousel.js",
+      //"/js/bootstrap-popover.js","/js/bootstrap-scrollspy.js","/js/bootstrap-tab.js",
+      //"/js/bootstrap-transition.js","/js/bootstrap-typeahead.js"]
       })
 
