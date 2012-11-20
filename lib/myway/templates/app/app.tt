@@ -2,6 +2,7 @@
 require "yaml"
 require "sprockets"
 require "haml"
+require "pathname"
 
 class <%= name.camelize %> < Sinatra::Base
 
@@ -16,8 +17,7 @@ class <%= name.camelize %> < Sinatra::Base
   set :assets, Sprockets::Environment.new
 
   # Configure sprockets
-  settings.assets.append_path "assets/js"
-  settings.assets.append_path "assets/css"
+  Dir.glob('assets/**/*/').select { |d| settings.assets.append_path "#{d}" if File.directory? d }
 
   # For compressed JS and CSS output
   require "yui/compressor"
@@ -26,6 +26,12 @@ class <%= name.camelize %> < Sinatra::Base
 
   get "/" do
     haml :index
+  end
+
+  get "/img/:file" do
+    file = params[:file].split(".")
+    content_type "image/#{file[1]}"
+    settings.assets["#{file[0]}.#{file[1]}"]
   end
 
   get "/js/:file.js" do

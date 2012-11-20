@@ -28,6 +28,12 @@ And to start a new sinatra project:
 
 CHANGE LOG
 
+Version 0.2.0
+    - replace head.js with yepnope.js for javascript loader
+    - dynamically append path for sprockets for assets
+    - adding path for images noted by grandslam
+    - refactoring
+
 Version 0.1.3
     - adds head, backbone, underscore js in assets pipeline
     - scaffolds capistrano deploy script

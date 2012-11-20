@@ -11,7 +11,7 @@ JS_LIBS = {
     'underscore' => 'http://documentcloud.github.com/underscore/underscore-min.js',
     'bootstrap' => 'http://twitter.github.com/bootstrap/assets/bootstrap.zip',
     'kickstart' => 'http://www.99lime.com/downloads/',
-    'yepnope' => 'https://github.com/SlexAxton/yepnope.js/zipball/master'
+    'yepnope' => 'https://github.com/SlexAxton/yepnope.js/archive/master.zip'
 }
 class String
   def camelize(first_letter_in_uppercase = true)
@@ -96,25 +96,38 @@ module Myway
         }
       end
 
-      def build_js_libs(libs=%w(head underscore backbone bootstrap))
+      def build_js_libs(libs=%w(yepnope underscore backbone bootstrap))
 
         libs.each do |lib|
           begin
-            if lib != "bootstrap"
+            if lib == "bootstrap" or lib == "yepnope"
+              File.open "assets/#{lib}.zip", 'wb' do |file|
+                file.write get_latest(lib)
+              end
+              unzip_file "./assets/#{lib}.zip", "./assets/"
+              File.delete "./assets/#{lib}.zip"
+            end
+
+            case lib
+            when "yepnope"
+              `mv ./assets/#{lib}.js-master/#{lib}.js ./assets/js/`
+              `mv ./assets/#{lib}.js-master/filters ./assets/js/`
+              `mv ./assets/#{lib}.js-master/plugins ./assets/js/`
+              `mv ./assets/#{lib}.js-master/prefixes ./assets/js/`
+              FileUtils.rm_rf "./assets/#{lib}.js-master/" if lib == "yepnope"
+            when "bootstrap"
+              `mv ./assets/#{lib}/js/* ./assets/js/`
+              `mv ./assets/#{lib}/css ./assets/`
+              `mv ./assets/#{lib}/img ./assets/`
+              FileUtils.rm_rf "./assets/#{lib}/" if lib == "bootstrap"
+            else
               File.open "./assets/js/#{lib}.min.js", 'w+' do |file|
                 file.write get_latest(lib)
               end
-            else
-              File.open "assets/js/#{lib}.zip", 'wb' do |file|
-                file.write get_latest(lib)
-              end
-              unzip_file "./assets/js/#{lib}.zip", "./assets/"
-              File.delete "./assets/js/#{lib}.zip"
-              `mv ./assets/bootstrap/js/* ./assets/js/`
-              `mv ./assets/bootstrap/css/ ./assets/`
-              `mv ./assets/bootstrap/img/ ./assets/`
-              FileUtils.rm_rf "./assets/bootstrap/"
             end
+
+
+
           rescue Errno::ETIMEDOUT, Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError, Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError => e
             say "#{e} Error while getting #{lib}.js"
             say "Add the library manually in assets/js"
@@ -152,8 +165,6 @@ module Myway
 
             template "myway/templates/spec/specHelper.js.tt", "#{name}/spec/javascripts/helpers/specHelper.js"
             template "myway/templates/spec/fixtures.js.tt", "#{name}/spec/javascripts/fixtures/fixtures.js"
-
-
         end
       end
     end
