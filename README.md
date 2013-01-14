@@ -1,15 +1,23 @@
 # Myway
 
 My way was popular frank sinatra song during 1969 and was top on billboard chart during that time. Now myway here
-provides basic sinatra scaffolding project for everyone to use. It comes with capistrano and unicorn integrated. By
+provides basic Sinatra project for everyone to use. It comes with capistrano and unicorn integrated. By
 default the sinatra app uses haml as it's templating engine.
+
+MyWay is integrated with Twitter-Bootstrap, every time you generate a new project with MyWay it gets the latest
+Twitter-Bootstrap source and integrates with your project, making it ready state with Twitter-Bootstrap design.
+
+As for javascript loader MyWay uses latest 'yepnope.js', an asynchronous conditional loader for your javascript/css to
+manage dependencies or loading the scripts you need super fast!
+
+Feel free to fork the project to generate your own Sinatra structure or add more bootstrap plugins, or contribute
+enhancing this by sending pull request.
 
 ## Installation and Usage
 
 Install it yourself from source:
 
     $ rake install
-
 
 Or,
 

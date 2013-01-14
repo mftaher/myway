@@ -10,7 +10,6 @@ JS_LIBS = {
     'backbone' => 'http://documentcloud.github.com/backbone/backbone-min.js',
     'underscore' => 'http://documentcloud.github.com/underscore/underscore-min.js',
     'bootstrap' => 'http://twitter.github.com/bootstrap/assets/bootstrap.zip',
-    'kickstart' => 'http://www.99lime.com/downloads/',
     'yepnope' => 'https://github.com/SlexAxton/yepnope.js/archive/master.zip'
 }
 class String
@@ -32,13 +31,14 @@ module Myway
       File.dirname(__FILE__)
     end
 
-    desc "new [NAME]", "Creates new sinatra projects, use 'sinatra:new help' for more."
+    desc "new [NAME]", "create new sinatra projects, use 'sinatra:new help' for more."
     def new(name=nil)
       @name = name
       if @name.nil?
         puts "You must provide a name for your project"
         exit 0
       end
+      @name.gsub!(/[\.-]/, "_")
 
       user_info
 

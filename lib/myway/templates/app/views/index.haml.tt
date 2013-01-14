@@ -1,6 +1,6 @@
 .hero-unit
   %h1 MyWay
-  %p It is just a base tool to build your own sinatra way - ftaher
+  %p It is just a base tool to structure your sinatra apps - ftaher
   %p
     %a.btn.btn-primary.btn-large{:href=> "https://github.com/mftaher/myway"}
       Fork me on Github
