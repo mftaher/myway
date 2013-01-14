@@ -1,6 +1,6 @@
-# Myway
+# MyWay
 
-My way was popular frank sinatra song during 1969 and was top on billboard chart during that time. Now myway here
+MyWay was popular frank sinatra song during 1969 and was top on billboard chart during that time. Now MyWay
 provides basic Sinatra project for everyone to use. It comes with capistrano and unicorn integrated. By
 default the sinatra app uses haml as it's templating engine.
 
