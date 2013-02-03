@@ -20,9 +20,11 @@ class <%= name.camelize %> < Sinatra::Base
   Dir.glob('assets/**/*/').select { |d| settings.assets.append_path "#{d}" if File.directory? d }
 
   # For compressed JS and CSS output
-  require "yui/compressor"
-  settings.assets.js_compressor  = YUI::JavaScriptCompressor.new
-  settings.assets.css_compressor = YUI::CssCompressor.new
+  configure :production do
+    require "yui/compressor"
+    settings.assets.js_compressor  = YUI::JavaScriptCompressor.new
+    settings.assets.css_compressor = YUI::CssCompressor.new
+  end
 
   get "/" do
     haml :index

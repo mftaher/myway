@@ -32,6 +32,7 @@ module Myway
     end
 
     desc "new [NAME]", "create new sinatra projects, use 'sinatra:new help' for more."
+    method_option :verbose, :aliases => "-v", :desc => "Be verbose"
     def new(name=nil)
       @name = name
       if @name.nil?
@@ -67,7 +68,7 @@ module Myway
 
       Dir.chdir(File.join(Dir.pwd, name))
 
-      build_js_libs
+      build_js_libs(options)
 
       init_git
       init_bundle
@@ -96,7 +97,7 @@ module Myway
         }
       end
 
-      def build_js_libs(libs=%w(yepnope underscore backbone bootstrap))
+      def build_js_libs(libs=%w(yepnope underscore backbone bootstrap), options)
 
         libs.each do |lib|
           begin
@@ -133,6 +134,7 @@ module Myway
       end
 
       def get_latest(scriptname)
+        #say "getting latest #{scriptname} sources" if options[:verbose]
         open(JS_LIBS[scriptname]).read
       end
 
